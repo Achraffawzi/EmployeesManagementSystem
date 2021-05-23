@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDGestionDesCongesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Chef">
+    <Key>
+      <PropertyRef Name="CIN" />
+    </Key>
+    <Property Name="NomChef" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PrenomChef" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateNaissanceChef" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Tel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IDService" Type="Int32" Nullable="false" />
+    <Property Name="NomUtilisateur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mdp" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="CIN" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Service" Relationship="Self.FK_Chef_Service" FromRole="Chef" ToRole="Service" />
+  </EntityType>
+  <EntityType Name="Conge">
+    <Key>
+      <PropertyRef Name="IDConge" />
+    </Key>
+    <Property Name="IDConge" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateDebut" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateFin" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateDemandeConge" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IDEmp" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Etat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employe" Relationship="Self.FK_Conge_Employe" FromRole="Conge" ToRole="Employe" />
+  </EntityType>
+  <EntityType Name="Employe">
+    <Key>
+      <PropertyRef Name="CIN" />
+    </Key>
+    <Property Name="NomEmp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PrenomEmp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateNaissanceEmp" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TelEmp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IDService" Type="Int32" Nullable="false" />
+    <Property Name="Mdp" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NomUtilisateur" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="CIN" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Conge" Relationship="Self.FK_Conge_Employe" FromRole="Employe" ToRole="Conge" />
+    <NavigationProperty Name="Service" Relationship="Self.FK_Employe_Service" FromRole="Employe" ToRole="Service" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="IDService" />
+    </Key>
+    <Property Name="IDService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomService" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Chef" Relationship="Self.FK_Chef_Service" FromRole="Service" ToRole="Chef" />
+    <NavigationProperty Name="Employe" Relationship="Self.FK_Employe_Service" FromRole="Service" ToRole="Employe" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Chef_Service">
+    <End Role="Service" Type="Self.Service" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Chef" Type="Self.Chef" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="IDService" />
+      </Principal>
+      <Dependent Role="Chef">
+        <PropertyRef Name="IDService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Conge_Employe">
+    <End Role="Employe" Type="Self.Employe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Conge" Type="Self.Conge" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employe">
+        <PropertyRef Name="CIN" />
+      </Principal>
+      <Dependent Role="Conge">
+        <PropertyRef Name="IDEmp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employe_Service">
+    <End Role="Service" Type="Self.Service" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="IDService" />
+      </Principal>
+      <Dependent Role="Employe">
+        <PropertyRef Name="IDService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDGestionDesCongesEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Chef" EntityType="Self.Chef" />
+    <EntitySet Name="Conge" EntityType="Self.Conge" />
+    <EntitySet Name="Employe" EntityType="Self.Employe" />
+    <EntitySet Name="Service" EntityType="Self.Service" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Chef_Service" Association="Self.FK_Chef_Service">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Chef" EntitySet="Chef" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Conge_Employe" Association="Self.FK_Conge_Employe">
+      <End Role="Employe" EntitySet="Employe" />
+      <End Role="Conge" EntitySet="Conge" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employe_Service" Association="Self.FK_Employe_Service">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Employe" EntitySet="Employe" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

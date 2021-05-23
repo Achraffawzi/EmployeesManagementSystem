@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BDGestionDesCongesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chef">
+          <Key>
+            <PropertyRef Name="CIN" />
+          </Key>
+          <Property Name="NomChef" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PrenomChef" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateNaissanceChef" Type="date" Nullable="false" />
+          <Property Name="Tel" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IDService" Type="int" Nullable="false" />
+          <Property Name="NomUtilisateur" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mdp" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="300" />
+          <Property Name="CIN" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conge">
+          <Key>
+            <PropertyRef Name="IDConge" />
+          </Key>
+          <Property Name="IDConge" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateDebut" Type="date" Nullable="false" />
+          <Property Name="DateFin" Type="date" Nullable="false" />
+          <Property Name="DateDemandeConge" Type="date" Nullable="false" />
+          <Property Name="IDEmp" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Etat" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="CIN" />
+          </Key>
+          <Property Name="NomEmp" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PrenomEmp" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateNaissanceEmp" Type="date" Nullable="false" />
+          <Property Name="TelEmp" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IDService" Type="int" Nullable="false" />
+          <Property Name="Mdp" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NomUtilisateur" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="300" />
+          <Property Name="CIN" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="IDService" />
+          </Key>
+          <Property Name="IDService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomService" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Chef_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Chef" Type="Self.Chef" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="IDService" />
+            </Principal>
+            <Dependent Role="Chef">
+              <PropertyRef Name="IDService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conge_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Conge" Type="Self.Conge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="CIN" />
+            </Principal>
+            <Dependent Role="Conge">
+              <PropertyRef Name="IDEmp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employe_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="IDService" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="IDService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDGestionDesCongesModelStoreContainer">
+          <EntitySet Name="Chef" EntityType="Self.Chef" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conge" EntityType="Self.Conge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Chef_Service" Association="Self.FK_Chef_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Chef" EntitySet="Chef" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conge_Employe" Association="Self.FK_Conge_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="Conge" EntitySet="Conge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employe_Service" Association="Self.FK_Employe_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDGestionDesCongesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Chef">
+          <Key>
+            <PropertyRef Name="CIN" />
+          </Key>
+          <Property Name="NomChef" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PrenomChef" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateNaissanceChef" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Tel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDService" Type="Int32" Nullable="false" />
+          <Property Name="NomUtilisateur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mdp" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CIN" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_Chef_Service" FromRole="Chef" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Conge">
+          <Key>
+            <PropertyRef Name="IDConge" />
+          </Key>
+          <Property Name="IDConge" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateDebut" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateDemandeConge" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IDEmp" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Etat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK_Conge_Employe" FromRole="Conge" ToRole="Employe" />
+        </EntityType>
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="CIN" />
+          </Key>
+          <Property Name="NomEmp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PrenomEmp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateNaissanceEmp" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TelEmp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDService" Type="Int32" Nullable="false" />
+          <Property Name="Mdp" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NomUtilisateur" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CIN" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Conge" Relationship="Self.FK_Conge_Employe" FromRole="Employe" ToRole="Conge" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_Employe_Service" FromRole="Employe" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="IDService" />
+          </Key>
+          <Property Name="IDService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomService" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Chef" Relationship="Self.FK_Chef_Service" FromRole="Service" ToRole="Chef" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK_Employe_Service" FromRole="Service" ToRole="Employe" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Chef_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Chef" Type="Self.Chef" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="IDService" />
+            </Principal>
+            <Dependent Role="Chef">
+              <PropertyRef Name="IDService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conge_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Conge" Type="Self.Conge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="CIN" />
+            </Principal>
+            <Dependent Role="Conge">
+              <PropertyRef Name="IDEmp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employe_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="IDService" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="IDService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDGestionDesCongesEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Chef" EntityType="Self.Chef" />
+          <EntitySet Name="Conge" EntityType="Self.Conge" />
+          <EntitySet Name="Employe" EntityType="Self.Employe" />
+          <EntitySet Name="Service" EntityType="Self.Service" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Chef_Service" Association="Self.FK_Chef_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Chef" EntitySet="Chef" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conge_Employe" Association="Self.FK_Conge_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="Conge" EntitySet="Conge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employe_Service" Association="Self.FK_Employe_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDGestionDesCongesModelStoreContainer" CdmEntityContainer="BDGestionDesCongesEntities2">
+          <EntitySetMapping Name="Chef">
+            <EntityTypeMapping TypeName="BDGestionDesCongesModel.Chef">
+              <MappingFragment StoreEntitySet="Chef">
+                <ScalarProperty Name="NomChef" ColumnName="NomChef" />
+                <ScalarProperty Name="PrenomChef" ColumnName="PrenomChef" />
+                <ScalarProperty Name="DateNaissanceChef" ColumnName="DateNaissanceChef" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="IDService" ColumnName="IDService" />
+                <ScalarProperty Name="NomUtilisateur" ColumnName="NomUtilisateur" />
+                <ScalarProperty Name="Mdp" ColumnName="Mdp" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="CIN" ColumnName="CIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conge">
+            <EntityTypeMapping TypeName="BDGestionDesCongesModel.Conge">
+              <MappingFragment StoreEntitySet="Conge">
+                <ScalarProperty Name="IDConge" ColumnName="IDConge" />
+                <ScalarProperty Name="DateDebut" ColumnName="DateDebut" />
+                <ScalarProperty Name="DateFin" ColumnName="DateFin" />
+                <ScalarProperty Name="DateDemandeConge" ColumnName="DateDemandeConge" />
+                <ScalarProperty Name="IDEmp" ColumnName="IDEmp" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employe">
+            <EntityTypeMapping TypeName="BDGestionDesCongesModel.Employe">
+              <MappingFragment StoreEntitySet="Employe">
+                <ScalarProperty Name="NomEmp" ColumnName="NomEmp" />
+                <ScalarProperty Name="PrenomEmp" ColumnName="PrenomEmp" />
+                <ScalarProperty Name="DateNaissanceEmp" ColumnName="DateNaissanceEmp" />
+                <ScalarProperty Name="TelEmp" ColumnName="TelEmp" />
+                <ScalarProperty Name="IDService" ColumnName="IDService" />
+                <ScalarProperty Name="Mdp" ColumnName="Mdp" />
+                <ScalarProperty Name="NomUtilisateur" ColumnName="NomUtilisateur" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="CIN" ColumnName="CIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Service">
+            <EntityTypeMapping TypeName="BDGestionDesCongesModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="IDService" ColumnName="IDService" />
+                <ScalarProperty Name="NomService" ColumnName="NomService" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BDGestionDesCongesModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
