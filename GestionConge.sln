@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionConge", "GestionConge\GestionConge.csproj", "{4AFCD26A-3357-488A-BFF4-CD6637DC53BA}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{6BC37BC1-809C-4172-9193-D318B1EE0202}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AFCD26A-3357-488A-BFF4-CD6637DC53BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AFCD26A-3357-488A-BFF4-CD6637DC53BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AFCD26A-3357-488A-BFF4-CD6637DC53BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AFCD26A-3357-488A-BFF4-CD6637DC53BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BC37BC1-809C-4172-9193-D318B1EE0202}.Debug|Any CPU.ActiveCfg = Debug
+		{6BC37BC1-809C-4172-9193-D318B1EE0202}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F35B92CB-C9E9-48EA-9015-4D62833FE396}
+	EndGlobalSection
+EndGlobal
