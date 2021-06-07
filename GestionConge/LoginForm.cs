@@ -74,9 +74,9 @@ namespace GestionConge
             {
                 var randomPassword = new Random();
                 var mail = new MailMessage();
-                var loginInfo = new NetworkCredential(this.metroTextBox3.Text, this.metroTextBox4.Text);
+                var loginInfo = new NetworkCredential("achrafawzi2000@gmail.com", "Lufthansa224$");
                 mail.From = new MailAddress(this.metroTextBox3.Text);
-                mail.To.Add(new MailAddress(this.metroTextBox3.Text));
+                mail.To.Add(new MailAddress("achrafawzi2000@gmail.com"));
                 mail.Subject = "Réinitialiser le mot de passe du chef de service";
                 var code = randomPassword.Next(121, 9999);
                 mail.Body = "Votre nouveau mot de passe est : " + code;

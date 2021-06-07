@@ -283,14 +283,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GestionConge.exe" size="1761816">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GestionConge.exe" size="1761304">
       <assemblyIdentity name="GestionConge" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HlL5JSnvI4fUfOuKHDtSDpB3OrQdaQVVTyAdR3o8OtI=</dsig:DigestValue>
+        <dsig:DigestValue>wl8MSeIUvhnSGpmejQBVLz0bXS7/nNl3NBXy7gQ3xk0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
